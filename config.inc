@@ -1,5 +1,5 @@
 [DATABASE_CONFIG]
-bd.name=directorio+
-bd.user=directorio+
-bd.pass=hyNXf9Tb6JYz4fTU
+bd.name=mysqlconnector
+bd.user=mysqlconnector
+bd.pass=VQ9NR2sNymrfdnGT
 bd.host=localhost
