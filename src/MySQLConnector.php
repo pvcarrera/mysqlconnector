@@ -18,7 +18,6 @@ class MySQLConnector {
 	public function query($sql){
 
 		$this->openConnection();
-		mysql_select_db($this->dbName, $this->connection);
 		$result = mysql_query($sql, $this->connection); 
 		if (mysql_errno($this->connection)) {
 		    throw new Exception("Error while executing query: " . $sql);
@@ -33,6 +32,9 @@ class MySQLConnector {
 			return $rows;
 		}else
 			return true;
+	}
+
+	public function getTables(){
 	}
 
 
@@ -50,6 +52,7 @@ class MySQLConnector {
 			throw new Exception('Cannot connect to mysql database');
 		else{
 			$this->connection = $connect;
+			mysql_select_db($this->dbName, $this->connection);
 		}
 	}
 

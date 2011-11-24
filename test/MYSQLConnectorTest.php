@@ -5,6 +5,7 @@ require_once dirname(__FILE__).'/../src/MySQLConnector.php';
 class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 
 	private $connection;
+	private $tables;
 
 	public function setUp(){
 		$config = parse_ini_file('config.inc',true);
@@ -49,5 +50,6 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 
 	private function initDatabase(){
 		$this->connection->query("truncate table `tabla`");
+		$this->tables = $this->connection->query("show tables");
 	}
 }	
