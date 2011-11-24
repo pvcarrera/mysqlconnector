@@ -34,7 +34,27 @@ class MySQLConnector {
 			return true;
 	}
 
-	public function getTables(){
+	public function emptyDatabase(){
+		$tables = $this->getTables();
+		foreach($tables as $table){
+			$this->query("DROP TABLE {$table}");
+		}
+	}
+
+	private function getTables(){
+		$this->openConnection();
+		$result = mysql_query("SHOW TABLES", $this->connection); 
+		if (mysql_errno($this->connection)) {
+		    throw new Exception("Error while executing query: " . $sql);
+		}
+		$rows = array();
+		while ($row = mysql_fetch_assoc($result)) {
+		    $rows[] = $row['Tables_in_mysqlconnector'];
+		}
+
+		$this->closeConnection();
+
+		return $rows;
 	}
 
 
