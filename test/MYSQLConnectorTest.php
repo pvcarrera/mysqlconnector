@@ -50,5 +50,4 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 	private function initDatabase(){
 		$this->connection->query("truncate table `tabla`");
 	}
-
 }	
