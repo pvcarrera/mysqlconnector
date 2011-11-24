@@ -1,5 +1,4 @@
 <?php
-                                                                                                
 require_once dirname(__FILE__).'/../src/MySQLConnector.php';
 
 class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
