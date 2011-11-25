@@ -22,16 +22,14 @@ class MySQLConnector {
 		if (mysql_errno($this->connection)) {
 		    throw new Exception("Error while executing query: " . $sql);
 		}
-		if($this->isSelectQuery($sql)) {
-			$rows = array();
-			while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-			    $rows[] = $row;
-			}
-			$this->closeConnection();
-			return $rows;
-		} else {
+		if (!$this->isSelectQuery($sql))
 			return true;
+		$rows = array();
+		while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+		    $rows[] = $row;
 		}
+		$this->closeConnection();
+		return $rows;
 	}
 
 	public function emptyDatabase() {
