@@ -47,7 +47,6 @@ class MySQLConnector {
 	}
 
 	private function initTable($tablename){
-		echo 'init table';
 		$tables = $this->getTables();
 		foreach($tables as $table){
 			if($tablename == $table)
