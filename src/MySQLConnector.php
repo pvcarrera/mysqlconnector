@@ -20,8 +20,6 @@ class MySQLConnector {
 
 		$analysis = new QueryAnalyzer($sql);
 		$tablename = $analysis->table();
-		//if($analysis->type == 'insert')
-			//$this->initTable($tablename);
 		$this->openConnection();
 		$result = mysql_query($sql, $this->connection); 
 		if (mysql_errno($this->connection)) {
@@ -45,21 +43,6 @@ class MySQLConnector {
 			$this->query("DROP TABLE {$table}");
 		}
 	}
-
-	private function initTable($tablename){
-		$tables = $this->getTables();
-		foreach($tables as $table){
-			if($tablename == $table)
-				return;
-		}
-		$sql = "CREATE TABLE {$tablename}(
-			campo1 varchar(100),
-			campo2 varchar(100)
-			)";
-		$this->query($sql);
-
-	}
-
 
 	private function getTables(){
 		$this->openConnection();
