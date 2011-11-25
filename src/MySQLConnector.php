@@ -29,10 +29,12 @@ class MySQLConnector {
 		}
 		$this->closeConnection();
 
-		if($this->isCountQuery($sql)){
+		if($this->isCountQuery($sql))
 			return $rows[0]["COUNT(*)"];
-		}
-		else
+		else if($this->isMaxQuery($sql)){
+			$flatValues = array_values($rows[0]);
+			return $flatValues[0];
+		}else
 			return $rows;
 	}
 
@@ -76,6 +78,10 @@ class MySQLConnector {
 
 	private function isCountQuery($sql) {
 		return (preg_match('/count/', strtolower($sql)) > 0);
+	}
+
+	private function isMaxQuery($sql) {
+		return (preg_match('/max/', strtolower($sql)) > 0);
 	}
 
 	private function openConnection() {
