@@ -35,8 +35,7 @@ class MySQLConnector {
 	}
 
 	public function emptyDatabase(){
-		$tables = $this->getTables();
-		foreach($tables as $table){
+		foreach($this->getTables() as $table){
 			$this->query("DROP TABLE {$table}");
 		}
 	}
