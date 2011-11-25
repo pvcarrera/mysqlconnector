@@ -1,1 +1,1 @@
-To run tests correctly it is necessary to import the mysql database found in the mysqlconnector.sql file and configure the config.inc file with its access data.
+To run tests correctly it is necessary to provide an empty mysql database  and configure the config.inc file with its access data.
