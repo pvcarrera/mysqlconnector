@@ -28,10 +28,9 @@ class MySQLConnector {
 			while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
 			    $rows[] = $row;
 			}
-
 			$this->closeConnection();
 			return $rows;
-		}else
+		} else
 			return true;
 	}
 
