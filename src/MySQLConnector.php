@@ -18,8 +18,6 @@ class MySQLConnector {
 
 	public function query($sql){
 
-		$analysis = new QueryAnalyzer($sql);
-		$tablename = $analysis->table();
 		$this->openConnection();
 		$result = mysql_query($sql, $this->connection); 
 		if (mysql_errno($this->connection)) {
