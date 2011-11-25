@@ -17,6 +17,7 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$this->connection->emptyDatabase();
+		$this->connection->query("CREATE TABLE tabla(campo1 varchar(100),campo2 varchar(100))");
 	}
 
 	public function insert_cases(
