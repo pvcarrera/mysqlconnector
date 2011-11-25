@@ -16,8 +16,7 @@ class MySQLConnector {
 		$this->password = $password;
 	}
 
-	public function query($sql){
-
+	public function query($sql) {
 		$this->openConnection();
 		$result = mysql_query($sql, $this->connection); 
 		if (mysql_errno($this->connection)) {
@@ -30,17 +29,18 @@ class MySQLConnector {
 			}
 			$this->closeConnection();
 			return $rows;
-		} else
+		} else {
 			return true;
+		}
 	}
 
-	public function emptyDatabase(){
-		foreach($this->getTables() as $table){
+	public function emptyDatabase() {
+		foreach($this->getTables() as $table) {
 			$this->query("DROP TABLE {$table}");
 		}
 	}
 
-	private function getTables(){
+	private function getTables() {
 		$this->openConnection();
 		$result = mysql_query("SHOW TABLES", $this->connection); 
 		if (mysql_errno($this->connection)) {
@@ -50,35 +50,35 @@ class MySQLConnector {
 		while ($row = mysql_fetch_assoc($result)) {
 		    $rows[] = $row['Tables_in_mysqlconnector'];
 		}
-
 		$this->closeConnection();
-
 		return $rows;
 	}
 
 
-	private function isSelectQuery($sql){
+	private function isSelectQuery($sql) {
 		$lowerCase = strtolower($sql);
-		if (preg_match('/select/',$lowerCase))
+		if (preg_match('/select/',$lowerCase)) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 
-	private function openConnection (){
+	private function openConnection() {
 		$connect = mysql_connect($this->host, $this->user, $this->password);
-		if($connect == false)
+		if ($connect == false) {
 			throw new Exception('Cannot connect to mysql database');
-		else{
+		} else {
 			$this->connection = $connect;
 			mysql_select_db($this->dbName, $this->connection);
 		}
 	}
 
-	private function closeConnection (){
+	private function closeConnection() {
 		$closed = mysql_close ($this->connection);
-		if($closed == false)
+		if ($closed == false) {
 			throw new Exception('Cannot close connection to mysql database');
+		}
 	}
 
-}	
+}
