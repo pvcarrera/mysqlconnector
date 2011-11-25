@@ -98,4 +98,13 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
+	public function test_count(
+	) {
+		$this->assertEquals(0, $this->connection->query("SELECT COUNT(*) FROM tabla"));
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->assertEquals(1, $this->connection->query("SELECT COUNT(*) FROM tabla"));
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->assertEquals(2, $this->connection->query("SELECT COUNT(*) FROM tabla"));
+	}
+
 }	

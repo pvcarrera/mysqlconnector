@@ -28,7 +28,12 @@ class MySQLConnector {
 		    $rows[] = $row;
 		}
 		$this->closeConnection();
-		return $rows;
+
+		if($this->isCountQuery($sql)){
+			return $rows[0]["COUNT(*)"];
+		}
+		else
+			return $rows;
 	}
 
 	public function emptyDatabase() {
@@ -67,6 +72,10 @@ class MySQLConnector {
 
 	private function isSelectQuery($sql) {
 		return (preg_match('/select/', strtolower($sql)) > 0);
+	}
+
+	private function isCountQuery($sql) {
+		return (preg_match('/count/', strtolower($sql)) > 0);
 	}
 
 	private function openConnection() {
