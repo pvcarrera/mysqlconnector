@@ -9,12 +9,13 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$config = parse_ini_file('config.inc',true);
 		$dbConfig = $config['DATABASE_CONFIG'] ;
 		
-			$this->connection = new MySQLConnector (
-				$dbConfig['bd.host'],
-				$dbConfig['bd.name'],
-				$dbConfig['bd.user'],
-				$dbConfig['bd.pass']
-			);
+		$this->connection = new MySQLConnector (
+			$dbConfig['bd.host'],
+			$dbConfig['bd.name'],
+			$dbConfig['bd.user'],
+			$dbConfig['bd.pass']
+		);
+
 		$this->initDatabase();
 	}
 

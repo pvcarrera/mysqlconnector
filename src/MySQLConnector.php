@@ -20,8 +20,8 @@ class MySQLConnector {
 
 		$analysis = new QueryAnalyzer($sql);
 		$tablename = $analysis->table();
-		if($analysis->type == 'insert')
-			$this->initTable($tablename);
+		//if($analysis->type == 'insert')
+			//$this->initTable($tablename);
 		$this->openConnection();
 		$result = mysql_query($sql, $this->connection); 
 		if (mysql_errno($this->connection)) {
