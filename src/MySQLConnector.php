@@ -1,5 +1,4 @@
 <?php
-require_once dirname(__FILE__)."/QueryAnalyzer.php";
 
 class MySQLConnector {
 
@@ -16,53 +15,29 @@ class MySQLConnector {
 		$this->password = $password;
 	}
 
-	public function query($sql){
-
-		$analysis = new QueryAnalyzer($sql);
-		$tablename = $analysis->table();
-		if($analysis->type == 'insert')
-			$this->initTable($tablename);
+	public function query($sql) {
 		$this->openConnection();
 		$result = mysql_query($sql, $this->connection); 
 		if (mysql_errno($this->connection)) {
 		    throw new Exception("Error while executing query: " . $sql);
 		}
-		if($this->isSelectQuery($sql)) {
-			$rows = array();
-			while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-			    $rows[] = $row;
-			}
-
-			$this->closeConnection();
-			return $rows;
-		}else
+		if (!$this->isSelectQuery($sql))
 			return true;
+		$rows = array();
+		while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
+		    $rows[] = $row;
+		}
+		$this->closeConnection();
+		return $rows;
 	}
 
-	public function emptyDatabase(){
-		$tables = $this->getTables();
-		foreach($tables as $table){
+	public function emptyDatabase() {
+		foreach($this->getTables() as $table) {
 			$this->query("DROP TABLE {$table}");
 		}
 	}
 
-	private function initTable($tablename){
-		echo 'init table';
-		$tables = $this->getTables();
-		foreach($tables as $table){
-			if($tablename == $table)
-				return;
-		}
-		$sql = "CREATE TABLE {$tablename}(
-			campo1 varchar(100),
-			campo2 varchar(100)
-			)";
-		$this->query($sql);
-
-	}
-
-
-	private function getTables(){
+	private function getTables() {
 		$this->openConnection();
 		$result = mysql_query("SHOW TABLES", $this->connection); 
 		if (mysql_errno($this->connection)) {
@@ -72,35 +47,30 @@ class MySQLConnector {
 		while ($row = mysql_fetch_assoc($result)) {
 		    $rows[] = $row['Tables_in_mysqlconnector'];
 		}
-
 		$this->closeConnection();
-
 		return $rows;
 	}
 
 
-	private function isSelectQuery($sql){
-		$lowerCase = strtolower($sql);
-		if (preg_match('/select/',$lowerCase))
-			return true;
-		else
-			return false;
+	private function isSelectQuery($sql) {
+		return (preg_match('/select/', strtolower($sql)) > 0);
 	}
 
-	private function openConnection (){
+	private function openConnection() {
 		$connect = mysql_connect($this->host, $this->user, $this->password);
-		if($connect == false)
+		if ($connect == false) {
 			throw new Exception('Cannot connect to mysql database');
-		else{
+		} else {
 			$this->connection = $connect;
 			mysql_select_db($this->dbName, $this->connection);
 		}
 	}
 
-	private function closeConnection (){
+	private function closeConnection() {
 		$closed = mysql_close ($this->connection);
-		if($closed == false)
+		if ($closed == false) {
 			throw new Exception('Cannot close connection to mysql database');
+		}
 	}
 
-}	
+}

@@ -9,13 +9,15 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$config = parse_ini_file('config.inc',true);
 		$dbConfig = $config['DATABASE_CONFIG'] ;
 		
-			$this->connection = new MySQLConnector (
-				$dbConfig['bd.host'],
-				$dbConfig['bd.name'],
-				$dbConfig['bd.user'],
-				$dbConfig['bd.pass']
-			);
-		$this->initDatabase();
+		$this->connection = new MySQLConnector (
+			$dbConfig['bd.host'],
+			$dbConfig['bd.name'],
+			$dbConfig['bd.user'],
+			$dbConfig['bd.pass']
+		);
+
+		$this->connection->emptyDatabase();
+		$this->connection->query("CREATE TABLE tabla(campo1 varchar(100),campo2 varchar(100))");
 	}
 
 	public function insert_cases(
@@ -46,7 +48,4 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expectedReturn, $this->connection->query($selectQuery));
 	}
 
-	private function initDatabase(){
-		$this->connection->emptyDatabase();
-	}
 }	
