@@ -48,4 +48,18 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expectedReturn, $this->connection->query($selectQuery));
 	}
 
+	public function test_double_insert(
+	) {
+		$this->connection->addAutoInc("tabla");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2"),
+				array("id" => 2, "campo1" => "valor1", "campo2" =>"valor2")
+			),
+			$this->connection->query("SELECT * FROM tabla")
+		);
+	}
+
 }	

@@ -37,6 +37,19 @@ class MySQLConnector {
 		}
 	}
 
+	public function addAutoInc($table){
+		$this->openConnection();
+		
+		$this->query("ALTER TABLE {$table} 
+			ADD id smallint(10) 
+			AUTO_INCREMENT 
+			KEY 
+			FIRST"
+		);
+
+		$this->closeConnection();
+	}
+
 	private function getTables() {
 		$this->openConnection();
 		$result = mysql_query("SHOW TABLES", $this->connection); 
