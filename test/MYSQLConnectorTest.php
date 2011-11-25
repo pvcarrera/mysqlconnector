@@ -16,7 +16,7 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 			$dbConfig['bd.pass']
 		);
 
-		$this->initDatabase();
+		$this->connection->emptyDatabase();
 	}
 
 	public function insert_cases(
@@ -47,7 +47,4 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expectedReturn, $this->connection->query($selectQuery));
 	}
 
-	private function initDatabase(){
-		$this->connection->emptyDatabase();
-	}
 }	
