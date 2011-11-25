@@ -54,12 +54,7 @@ class MySQLConnector {
 
 
 	private function isSelectQuery($sql) {
-		$lowerCase = strtolower($sql);
-		if (preg_match('/select/',$lowerCase)) {
-			return true;
-		} else {
-			return false;
-		}
+		return (preg_match('/select/', strtolower($sql)) > 0);
 	}
 
 	private function openConnection() {
