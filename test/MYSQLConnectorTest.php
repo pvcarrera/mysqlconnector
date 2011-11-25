@@ -62,4 +62,40 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
+	public function test_select(
+	) {
+		$this->connection->addAutoInc("tabla");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor3', 'valor2')");
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2")
+			),
+			$this->connection->query("SELECT * FROM tabla WHERE campo1='valor1'")
+		);
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2")
+			),
+			$this->connection->query("SELECT * FROM tabla WHERE campo1='valor1' AND campo2='valor2'")
+		);
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2"),
+				array("id" => 2, "campo1" => "valor3", "campo2" =>"valor2")
+			),
+			$this->connection->query("SELECT * FROM tabla WHERE campo2='valor2'")
+		);
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2")
+			),
+			$this->connection->query("SELECT * FROM tabla WHERE id=1")
+		);
+		$this->assertEquals(
+			array(),
+			$this->connection->query("SELECT * FROM tabla WHERE campo1='valor1' AND campo2='valor3'")
+		);
+	}
+
 }	
