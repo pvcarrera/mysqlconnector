@@ -31,10 +31,7 @@ class MySQLConnector {
 
 		if($this->isCountQuery($sql))
 			return $rows[0]["COUNT(*)"];
-		else if($this->isMaxQuery($sql)){
-			$flatValues = array_values($rows[0]);
-			return $flatValues[0];
-		}else
+		else
 			return $rows;
 	}
 

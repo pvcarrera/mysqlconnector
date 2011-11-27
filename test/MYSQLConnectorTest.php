@@ -117,7 +117,7 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 					"INSERT INTO tabla(campo1, campo2) VALUES ('valor3', 21)"
 				),
 				"SELECT MAX(id) FROM tabla",
-				2
+				array(array("MAX(id)" => 2))
 			),
 			"max of numeric field" => array(
 				"tabla",
@@ -126,7 +126,7 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 					"INSERT INTO tabla(campo1, campo2) VALUES ('valor3', 21)"
 				),
 				"SELECT MAX(campo2) FROM tabla",
-				23
+				array(array("MAX(campo2)" => 23))
 			),
 			"max of alphabetic field" => array(
 				"tabla",
@@ -135,7 +135,7 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 					"INSERT INTO tabla(campo1, campo2) VALUES ('valor3', 21)"
 				),
 				"SELECT MAX(campo1) FROM tabla",
-				"valor3"
+				array(array("MAX(campo1)" => "valor3"))
 			),
 			"max when empty rows" => array(
 				"tabla",
@@ -143,7 +143,7 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 					"INSERT INTO tabla() VALUES ()"
 				),
 				"SELECT MAX(id) FROM tabla",
-				1
+				array(array("MAX(id)" => 1))
 			),
 			"max when empty rows (b)" => array(
 				"tabla",
@@ -151,7 +151,8 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 					"INSERT INTO tabla() VALUES ()"
 				),
 				"SELECT MAX(id) as id FROM tabla",
-				1
+				array(array("id" => 1))
+
 			)
 		);
 	}
