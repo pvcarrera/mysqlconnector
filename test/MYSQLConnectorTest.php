@@ -202,4 +202,28 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 			$this->connection->query("SELECT * FROM tabla")
 		);
 	}
+
+	
+	public function test_update(
+	) {
+		$this->connection->addAutoInc("tabla");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->connection->query("UPDATE tabla SET campo1='valor3', campo2='valor4' WHERE id=2");
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2"),
+				array("id" => 2, "campo1" => "valor3", "campo2" =>"valor4")
+			),
+			$this->connection->query("SELECT * FROM tabla")
+		);
+		$this->connection->query("UPDATE tabla SET campo1='VVV', campo2='VVV'");
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "VVV", "campo2" =>"VVV"),
+				array("id" => 2, "campo1" => "VVV", "campo2" =>"VVV")
+			),
+			$this->connection->query("SELECT * FROM tabla")
+		);
+	}
 }	
