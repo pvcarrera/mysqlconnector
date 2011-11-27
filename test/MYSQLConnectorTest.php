@@ -100,11 +100,14 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 
 	public function test_count(
 	) {
-		$this->assertEquals(0, $this->connection->query("SELECT COUNT(*) FROM tabla"));
+		$expected = array(array("COUNT(*)" => "0"));
+		$this->assertEquals($expected, $this->connection->query("SELECT COUNT(*) FROM tabla"));
 		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
-		$this->assertEquals(1, $this->connection->query("SELECT COUNT(*) FROM tabla"));
+		$expected = array(array("COUNT(*)" => "1"));
+		$this->assertEquals($expected, $this->connection->query("SELECT COUNT(*) FROM tabla"));
 		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
-		$this->assertEquals(2, $this->connection->query("SELECT COUNT(*) FROM tabla"));
+		$expected = array(array("COUNT(*)" => "2"));
+		$this->assertEquals($expected, $this->connection->query("SELECT COUNT(*) FROM tabla"));
 	}
 
 	public function max_cases(
@@ -176,8 +179,9 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 	public function test_values_with_quotes(
 	) {
 		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 23)");
-		$this->assertEquals(1, $this->connection->query("SELECT COUNT(*) FROM tabla WHERE campo2=23"));
-		$this->assertEquals(1, $this->connection->query("SELECT COUNT(*) FROM tabla WHERE campo2='23'"));
+		$expected = array(array("COUNT(*)" => "1"));
+		$this->assertEquals($expected, $this->connection->query("SELECT COUNT(*) FROM tabla WHERE campo2=23"));
+		$this->assertEquals($expected, $this->connection->query("SELECT COUNT(*) FROM tabla WHERE campo2='23'"));
 	}
 
 }	

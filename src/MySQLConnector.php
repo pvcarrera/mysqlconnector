@@ -28,11 +28,8 @@ class MySQLConnector {
 		    $rows[] = $row;
 		}
 		$this->closeConnection();
-
-		if($this->isCountQuery($sql))
-			return $rows[0]["COUNT(*)"];
-		else
-			return $rows;
+		
+		return $rows;
 	}
 
 	public function emptyDatabase() {
