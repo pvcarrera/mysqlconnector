@@ -184,4 +184,22 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $this->connection->query("SELECT COUNT(*) FROM tabla WHERE campo2='23'"));
 	}
 
+	public function test_add_fields(
+	) {
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 23)");
+		$this->assertEquals(
+			array(
+				array("campo1" => "valor1", "campo2" => "23")
+			),
+			$this->connection->query("SELECT * FROM tabla")
+		);
+		$this->connection->query("ALTER TABLE tabla ADD campo3 VARCHAR(30)");
+		$this->connection->query("ALTER TABLE tabla ADD campo4 VARCHAR(30)");
+		$this->assertEquals(
+			array(
+				array("campo1" => "valor1", "campo2" => "23", "campo3" => null, "campo4" => null)
+			),
+			$this->connection->query("SELECT * FROM tabla")
+		);
+	}
 }	
