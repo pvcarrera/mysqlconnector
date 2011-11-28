@@ -95,4 +95,10 @@ class MySQLConnector {
 		}
 	}
 
+	public function clear() {
+		$tables = $this->getTables();
+		foreach ( $tables as $table ){
+			$this->query("TRUNCATE TABLE {$table}");
+		}
+	}
 }

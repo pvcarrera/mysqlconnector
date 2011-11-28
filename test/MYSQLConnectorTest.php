@@ -236,4 +236,16 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$this->connection->query("DELETE FROM tabla WHERE campo1='valor1'");
 		$this->assertEquals(1, count($this->connection->query("SELECT * FROM tabla")));
 	}
+
+	public function test_clear(
+	) {
+		$this->connection->query("CREATE TABLE tabla1(campo1 varchar(100),campo2 varchar(100))");
+		$this->connection->query("INSERT INTO tabla1(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor3', 'valor2')");
+
+		$this->connection->clear();
+
+		$this->assertEquals(0, count($this->connection->query("SELECT * FROM tabla")));
+		$this->assertEquals(0, count($this->connection->query("SELECT * FROM tabla1")));
+	}
 }	
