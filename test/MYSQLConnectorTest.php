@@ -6,7 +6,7 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 	private $connection;
 
 	public function setUp(){
-		$config = parse_ini_file('config.inc',true);
+		$config = parse_ini_file(dirname(__FILE__).'/../config.inc',true);
 		$dbConfig = $config['DATABASE_CONFIG'] ;
 		
 		$this->connection = new MySQLConnector (
@@ -266,4 +266,5 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $this->connection->dump());
 
 	}
+
 }	
