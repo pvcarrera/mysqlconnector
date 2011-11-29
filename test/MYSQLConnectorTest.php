@@ -267,4 +267,19 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 
 	}
 
+	public function test_cantAddAutoIncIfAlreadyExist(){
+		$this->connection->addAutoInc("tabla");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
+		$this->connection->addAutoInc("tabla");
+		$this->assertEquals(
+			array(
+				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2"),
+				array("id" => 2, "campo1" => "valor1", "campo2" =>"valor2")
+			),
+			$this->connection->query("SELECT * FROM tabla")
+		);
+
+	}
+
 }	

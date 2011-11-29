@@ -39,7 +39,8 @@ class MySQLConnector {
 	}
 
 	public function addAutoInc($table){
-		$this->openConnection();
+		if($this->existId($table))
+			return;
 		
 		$this->query("ALTER TABLE {$table} 
 			ADD id smallint(10) 
@@ -48,7 +49,21 @@ class MySQLConnector {
 			FIRST"
 		);
 
-		$this->closeConnection();
+	}
+
+	private function existId($table){
+		
+		$exist = $this->query(
+			"SELECT * 
+			FROM information_schema.COLUMNS 
+			WHERE 
+			    TABLE_SCHEMA = '{$this->dbName}' 
+			    AND TABLE_NAME = '{$table}' 
+			    AND COLUMN_NAME = 'id'"
+
+		);
+
+		return $exist;
 	}
 
 	private function getTables() {
