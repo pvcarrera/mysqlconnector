@@ -122,7 +122,7 @@ class MySQLConnector {
 		$tables = $this->getTables();
 		$dump = array();
 		foreach ( $tables as $table ){
-			$dump[$table] = $this->query("SELECT * FROM {$table}");
+			$dump[$table] = $this->query("SELECT * FROM `{$table}`");
 		}
 
 		return $dump;

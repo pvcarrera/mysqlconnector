@@ -5,5 +5,9 @@
 			<directory>test</directory>
 		</testsuite>
 
+		<testsuite name="DeployTests">
+			<directory>deploy_test</directory>
+		</testsuite>
+
 	</testsuites>
 </phpunit>

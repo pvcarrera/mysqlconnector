@@ -1,11 +1,11 @@
 K 25
 svn:wc:ra_dav:version-url
-V 69
-/svn/!svn/ver/857/cmar/directorio_plus/trunk/src/orm/src/dbmysql/test
+V 76
+/svn/!svn/ver/907/cmar/directorio_plus/trunk/src/orm/src/dbmysql/deploy_test
 END
-MYSQLConnectorTest.php
+DeployMYSQLConnectorTest.php
 K 25
 svn:wc:ra_dav:version-url
-V 92
-/svn/!svn/ver/857/cmar/directorio_plus/trunk/src/orm/src/dbmysql/test/MYSQLConnectorTest.php
+V 105
+/svn/!svn/ver/907/cmar/directorio_plus/trunk/src/orm/src/dbmysql/deploy_test/DeployMYSQLConnectorTest.php
 END

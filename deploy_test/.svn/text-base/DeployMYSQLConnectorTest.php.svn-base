@@ -1,14 +1,14 @@
 <?php
 require_once dirname(__FILE__).'/../src/MySQLConnector.php';
 
-class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
+class DeployDBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 
 	private $connection;
 
 	public function setUp(
 	) {
 		$config = parse_ini_file(dirname(__FILE__).'/../config.php', true);
-		$dbConfig = $config['TEST_DATABASE'] ;
+		$dbConfig = $config['DEPLOY_DATABASE'] ;
 		
 		$this->connection = new MySQLConnector (
 			$dbConfig['bd.host'],
@@ -267,20 +267,4 @@ class DBMysqlConnectorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $this->connection->dump());
 
 	}
-
-	public function test_cantAddAutoIncIfAlreadyExist(){
-		$this->connection->addAutoInc("tabla");
-		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
-		$this->connection->query("INSERT INTO tabla(campo1, campo2) VALUES ('valor1', 'valor2')");
-		$this->connection->addAutoInc("tabla");
-		$this->assertEquals(
-			array(
-				array("id" => 1, "campo1" => "valor1", "campo2" =>"valor2"),
-				array("id" => 2, "campo1" => "valor1", "campo2" =>"valor2")
-			),
-			$this->connection->query("SELECT * FROM tabla")
-		);
-
-	}
-
 }	
