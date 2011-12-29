@@ -34,7 +34,7 @@ class MySQLConnector {
 
 	public function emptyDatabase() {
 		foreach($this->getTables() as $table) {
-			$this->query("DROP TABLE {$table}");
+			$this->query("DROP TABLE `{$table}`");
 		}
 	}
 
@@ -114,7 +114,7 @@ class MySQLConnector {
 	public function clear() {
 		$tables = $this->getTables();
 		foreach ( $tables as $table ){
-			$this->query("TRUNCATE TABLE {$table}");
+			$this->query("TRUNCATE TABLE `{$table}`");
 		}
 	}
 
